@@ -21,4 +21,21 @@ public class RegexValidator {
         String expresion = "^[A-Z]{3}\\d{3}$";
         return Pattern.matches(expresion, placa);
     }
+
+    /**
+     * Valida si una cadena corresponde al formato de codigos postales en Medellín.
+     * El formato es un número de 6 digitos que comienza con "05".
+     * 
+     * @param codPostal La cadena a validar.
+     * @return true si la cadena es un codigo postal válido para Medellín, false en caso contrario.
+     */
+    public boolean esCodPostalValido(String codPostal){
+        // La expresión regular ^05\d{4}$ valida:
+        // ^ - Inicio de la cadena
+        // 05 - Los caracteres iniciales que ha de tener 
+        // \d{4} - Exactamente 4 digitos
+        // $ - Fin de la cadena
+        String expresion = "^05\\d{4}";
+        return Pattern.matches(codPostal, expresion);
+    }
 }
