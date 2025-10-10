@@ -35,7 +35,25 @@ public class RegexValidator {
         // 05 - Los caracteres iniciales que ha de tener 
         // \d{4} - Exactamente 4 digitos
         // $ - Fin de la cadena
-        String expresion = "^05\\d{4}";
+        String expresion = "^05\\d{4}$";
         return Pattern.matches(codPostal, expresion);
     }
+
+    /**
+     * Valida números de teléfonos fijos en Medellín.
+     * El formato es un número de 10 digitos que comienza con "604".
+     * 
+     * @param numFijo La cadena a validar.
+     * @return true si la cadena es un número fijo valido en Medellín, false en caso contrario.
+    */ 
+    public boolean esNumFijoValido(String numFijo){
+        //La expresión regular ^604\\d{7} valida:
+        // ^ - Inicio de la cadena
+        // 604 - Los caracteres iniciales que ha de tener 
+        // \d{7} - Exactamente 7 digitos
+        // $ - Fin de la cadena
+        String expresion = "^604\\d{7}$";
+        return Pattern.matches(numFijo, expresion);
+    }
+
 }
