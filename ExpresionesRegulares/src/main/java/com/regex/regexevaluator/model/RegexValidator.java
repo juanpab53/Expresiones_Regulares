@@ -56,4 +56,20 @@ public class RegexValidator {
         return Pattern.matches(numFijo, expresion);
     }
 
+    /** 
+     * Valida números de teléfonos celulares en Colombia. 
+     * El formato es un número de 10 dígitos que comienza con '3'.
+     * 
+     * @param numCelular La cadena a validar.
+     * @return true si la cadena es un número de celular valido en Colombia, false en caso contrario.
+    */
+    public boolean esNumCelularValido(String numCelular){
+        // La expresión regular ^3\d{9}$ valida:
+        // ^ - Inicio de la cadena
+        // 3 - El caracter inicial
+        // \d{9} - Exactamente 9 digitos
+        // $ - Fin de la cadena
+        String expresion = "^3\\d{9}$";
+        return Pattern.matches(numCelular, expresion);
+    }
 }
