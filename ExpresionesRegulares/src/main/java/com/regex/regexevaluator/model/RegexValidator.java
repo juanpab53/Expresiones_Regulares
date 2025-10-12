@@ -92,4 +92,26 @@ public class RegexValidator {
         String expresion = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         return Pattern.matches(email, expresion);
     }
+
+    /**  
+     * Valida si una cadena corresponde a una fecha en formato dd/mm/aaaa.
+     * Esta validación se centra en el formato y los rangos numéricos básicos.
+     * 
+     * @param fecha La cadena a validar.
+     * @return true si la cadena tiene el formato de fecha valido, false en caso contrario. 
+    */
+    public boolean esFechaValida(String fecha){
+        // La expresión regular ^(0[1-9]|[12]\\d|3[01])\\/(0[1-9]|1[0-2])\\/\\d{4}$ valida:
+        // ^ - Inicio de la cadena.
+        // (0[1-9]|[12]\\d|3[01]) - Día : 01-09, 10-29, 30-31.
+        // \/ - Separador '/'.
+        // (0[1-9]|1[0-2]) - Mes : 01-09, 10-12.
+        // \/ - Separador '/'.
+        // \d{4} - Año : 4 dígitos.
+        // $ - Fin de la cadena.
+        // Nota: El metódo valida los rangos numéricos, pero no valida la lógica del calendarip.
+        String expresion = "^(0[1-9]|[12]\\d|3[01])\\/(0[1-9]|1[0-2])\\/\\d{4}$";
+        return Pattern.matches(expresion, fecha);
+    }
+
 }
