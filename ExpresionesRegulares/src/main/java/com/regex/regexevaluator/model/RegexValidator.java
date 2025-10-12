@@ -72,4 +72,24 @@ public class RegexValidator {
         String expresion = "^3\\d{9}$";
         return Pattern.matches(numCelular, expresion);
     }
+
+    /** 
+     * Valida si una cadena corresponde a un formato general de correo electronico.
+     * Formato : example@domain
+     * 
+     * @param email La cadena a validar.
+     * @return true si la cadena es un correo electronico valido, false en caso contrario.
+    */
+    public boolean esEmailValido(String email){
+        // La expresión regular ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ valida:
+        // ^ - Inicio de la cadena
+        // [a-zA-Z0-9._%+-]+ - Es la parte de example: uno o mas caracteres de letras, números o ._%+-
+        // @ - El caracter @
+        // [a-zA-Z0-9.-]+ - Es la parte de domain: uno o más caracteres de letras, números, punto o guion.
+        // \. - El caracter .
+        // [a-zA-Z]{2,} - Al menos dos caracteres de letras
+        // $ - Fin de la cadena
+        String expresion = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        return Pattern.matches(email, expresion);
+    }
 }
