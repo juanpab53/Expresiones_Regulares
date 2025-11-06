@@ -81,4 +81,73 @@ public class RegexValidator {
         return Pattern.matches(expresion, fecha);
     }
 
+    /**
+     * Valida si una cadena corresponde a un formato de 24 horas.
+     * 
+     * @param hora Cadena a validar.
+     * @return  True si la cadena es valida, flase en caso contrario.
+    */
+
+    public boolean esHoraValida24(String hora){
+        String expresion = "^([01]\\d|2[0-3]):([0-5]\\d):[0-5]\\d$";
+        return Pattern.matches(expresion, hora);
+    }
+
+    /**
+     * Valida si una cadena corresponde a un formato de 12 horas.
+     * 
+     * @param hora Cadena a validar.
+     * @return True si la cadena es valida, flase en caso contrario.
+     */
+    public boolean esHoraValida12(String hora){
+        String expresion = "^(0[1-9]|1[0-2]):([0-5]\\d):[0-5]\\d (AM|PM)$";
+        return Pattern.matches(expresion, hora);
+    }
+
+    /**
+     * Valida si una cadena corresponde a la declaración de una variable en Java
+     * 
+     * @param variable Cadena a validar
+     * @return True si la cadena es valida, false en caso contrario.
+     */
+    public boolean esVarJava(String variable){
+        String expresion = "^[a-zA-Z_][a-zA-Z0-9_]*$";
+        return Pattern.matches(expresion, variable);
+    }
+
+    /**
+     * Valida si una cadena corresponde al formato general de una URL
+     * 
+     * @param url Cadena a validar.
+     * @return True si la cadena es valida, false en caso contrario.
+    */
+    public boolean esURLValida(String url){
+        String expresion = "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]$";
+        return Pattern.matches(expresion, url);
+    }
+    
+
+    /**
+     * Valida si una cadena corresponde a un formato ISBN-10 o ISBN-13 y especifica cuál es.
+     * Puede incluir un prefijo opcional como "ISBN: ".
+     *
+     * @param isbn La cadena a validar.
+     * @return "ISBN-13", "ISBN-10", o "No válido" según corresponda.
+     */
+    public String validarTipoISBN(String isbn) {
+        // Expresión para ISBN-13: opcionalmente prefijo ISBN, seguido de 13 dígitos, con o sin guiones/espacios.
+        // Ejemplo: 978-3-16-148410-0
+        String expresionISBN13 = "^(?:ISBN(?:-13)?:?\\s)?(?:97[89][ -]?)?\\d{1,5}[- ]?\\d{1,7}[- ]?\\d{1,6}[- ]?\\d$";
+        
+        // Expresión para ISBN-10: opcionalmente prefijo ISBN, seguido de 10 dígitos (último puede ser X), con o sin guiones/espacios.
+        // Ejemplo: 0-306-40615-2
+        String expresionISBN10 = "^(?:ISBN(?:-10)?:?\\s)?\\d{1,5}[- ]?\\d{1,7}[- ]?\\d{1,6}[- ]?[0-9X]$";
+
+        // Primero validamos el formato de 13 dígitos, que es más específico.
+        if (Pattern.matches(expresionISBN13, isbn.replaceAll("[- ]", ""))) return "ISBN-13";
+        if (Pattern.matches(expresionISBN10, isbn.replaceAll("[- ]", ""))) return "ISBN-10";
+
+        return "No válido";
+    }
+
 }
