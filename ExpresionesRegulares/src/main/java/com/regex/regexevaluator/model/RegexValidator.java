@@ -116,13 +116,15 @@ public class RegexValidator {
     }
 
     /**
-     * Valida si una cadena corresponde al formato general de una URL
+     * Valida si una cadena corresponde al formato general de una URL, incluyendo
+     * protocolo, dominio/IP, puerto opcional y ruta opcional.
      * 
      * @param url Cadena a validar.
      * @return True si la cadena es valida, false en caso contrario.
     */
     public boolean esURLValida(String url){
-        String expresion = "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]$";
+        // Valida protocolo, dominio (con subdominios) o IP, puerto opcional, y ruta/query/fragmento opcional.
+        String expresion = "^((https?://)|(www\\.)?)([\\dA-Za-z\\.-]+)\\.([A-Za-z\\.]{2,6})([/\\w \\.-]*)*\\/?$";
         return Pattern.matches(expresion, url);
     }
     
