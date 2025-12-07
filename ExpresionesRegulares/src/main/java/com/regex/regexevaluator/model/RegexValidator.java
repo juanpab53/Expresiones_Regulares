@@ -152,5 +152,134 @@ public class RegexValidator {
         return "No válido";
     }
 
+    /**
+     * Valida si una cadena corresponde a un código de barras de Colombia (EAN-13).
+     * El formato son 13 dígitos que comienzan con el prefijo 770.
+     *
+     * @param codigoBarras La cadena a validar.
+     * @return true si la cadena es un código de barras válido, false en caso contrario.
+     */
+    public boolean esCodigoBarrasColombiaValido(String codigoBarras) {
+        String expresion = "^770\\d{10}$";
+        return Pattern.matches(expresion, codigoBarras);
+    }
+
+    /**
+     * Valida si una cadena corresponde a un nombre o apellido, permitiendo tildes, la letra 'ñ' y espacios.
+     *
+     * @param nombre La cadena a validar.
+     * @return true si la cadena es un nombre válido, false en caso contrario.
+     */
+    public boolean esNombreApellidoValido(String nombre) {
+        String expresion = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(\\s[a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$";
+        return Pattern.matches(expresion, nombre);
+    }
+
+    /**
+     * Valida si una contraseña cumple con criterios de seguridad:
+     * Mínimo 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.
+     *
+     * @param contrasena La contraseña a validar.
+     * @return true si la contraseña es segura, false en caso contrario.
+     */
+    public boolean esContrasenaSegura(String contrasena) {
+        String expresion = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+        return Pattern.matches(expresion, contrasena);
+    }
+
+    /**
+     * Valida si una cadena tiene la estructura básica de un ciclo 'for' en Java.
+     *
+     * @param cicloFor La cadena a validar.
+     * @return true si la estructura es válida, false en caso contrario.
+     */
+    public boolean esCicloForValido(String cicloFor) {
+        String expresion = "^for\\s*\\(.*?\\;.*?\\;.*?\\)\\s*\\{?.*$";
+        return Pattern.matches(expresion, cicloFor);
+    }
+
+    /**
+     * Valida si una cadena representa un número de tipo double, incluyendo signo y notación científica.
+     *
+     * @param numero La cadena a validar.
+     * @return true si es un número double válido, false en caso contrario.
+     */
+    public boolean esNumeroDoubleValido(String numero) {
+        String expresion = "^[+-]?(\\d+|\\d*\\.\\d+)([eE][+-]?\\d+)?$";
+        return Pattern.matches(expresion, numero);
+    }
+
+    /**
+     * Valida si una cadena corresponde a un formato de Ley, Decreto o Artículo en Colombia.
+     * Ejemplos: "Ley 123 de 2023", "Decreto 456", "Artículo 7".
+     *
+     * @param textoLegal La cadena a validar.
+     * @return true si el formato es válido, false en caso contrario.
+     */
+    public boolean esLeyDecretoArticuloValido(String textoLegal) {
+        String expresion = "^(Ley|Decreto|Artículo)\\s+\\d+(\\s+de\\s+\\d{4})?([,\\s]+artículo\\s+\\d+)?$";
+        return Pattern.matches(expresion, textoLegal);
+    }
+
+    /**
+     * Valida si una cadena corresponde al formato de referencia de libro impreso en normas IEEE.
+     * Formato: [1] A. Author, "Title of Book," City, State: Publisher, year.
+     *
+     * @param referencia La cadena a validar.
+     * @return true si el formato es válido, false en caso contrario.
+     */
+    public boolean esReferenciaIeeeValida(String referencia) {
+        String expresion = "^\\[\\d+\\]\\s+[A-Z]\\.\\s+[A-Za-z]+(?:,\\s+[A-Z]\\.\\s+[A-Za-z]+)*,\\s+\"[^\"]+\",\\s+[A-Za-z\\s]+,\\s+[A-Za-z\\s]+:\\s+[A-Za-z\\s]+,\\s+\\d{4}\\.$";
+        return Pattern.matches(expresion, referencia);
+    }
+
+    /**
+     * Valida si una cadena corresponde al formato de referencia de libro en normas APA 7ma ed.
+     * Formato: Author, A. A. (Year). Title of work. Publisher.
+     *
+     * @param referencia La cadena a validar.
+     * @return true si el formato es válido, false en caso contrario.
+     */
+    public boolean esReferenciaApaValida(String referencia) {
+        String expresion = "^[A-Za-z]+,\\s+[A-Z]\\.(?:\\s+[A-Z]\\.)*\\s+\\(\\d{4}\\)\\.\\s+.+?\\.\\s+[A-Za-z\\s&]+(?:, Inc\\.)?\\.$";
+        return Pattern.matches(expresion, referencia);
+    }
+
+    /**
+     * Valida si una cadena corresponde a un formato de precio de producto.
+     * Admite signo de peso opcional, separadores de miles (punto) y decimales (coma).
+     *
+     * @param precio La cadena a validar.
+     * @return true si el formato es válido, false en caso contrario.
+     */
+    public boolean esPrecioProductoValido(String precio) {
+        String expresion = "^\\$?(\\d{1,3}(\\.\\d{3})*|\\d+)(,\\d{1,2})?$";
+        return Pattern.matches(expresion, precio);
+    }
     
+    /**
+     * Analiza una palabra para clasificar secuencias de vocales como hiatos o posibles diptongos.
+     *
+     * @param palabra La palabra a analizar.
+     * @return Una cadena que indica "Hiato Acentual", "Hiato Simple", "Posible Diptongo",
+     *         o "No contiene secuencia vocálica relevante".
+     */
+    public String clasificarDiptongoHiato(String palabra) {
+        // Regex 1: Hiato Simple (dos vocales abiertas juntas).
+        // Ejemplos: "teatro", "caos", "poeta".
+        String hiatoSimpleRegex = ".*[aáeéoó][aáeéoó].*";
+        if (Pattern.compile(hiatoSimpleRegex, Pattern.CASE_INSENSITIVE).matcher(palabra).matches()) {
+            return "Hiato Simple";
+        }
+
+        // Regex 2: Posible Diptongo (vocal abierta + cerrada átona, o dos cerradas).
+        // Es una aproximación, ya que no podemos saber la tonicidad de una vocal sin tilde.
+        // Ejemplos: "ciudad", "piano", "reina".
+        String diptongoRegex = ".*([aáeéoó][iu]|[iu][aáeéoó]|[iu][iu]).*";
+        if (Pattern.compile(diptongoRegex, Pattern.CASE_INSENSITIVE).matcher(palabra).matches()) {
+            return "Posible Diptongo";
+        }
+
+        return "No contiene secuencia vocálica relevante";
+    }
 }
